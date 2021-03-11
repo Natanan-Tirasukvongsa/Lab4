@@ -46,6 +46,7 @@ DMA_HandleTypeDef hdma_adc1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+uint32_t ADCData[4] = {0}; //ตัว�?ปรรับข้อมูลที่รับมาจา�? ADC
 
 /* USER CODE END PV */
 
@@ -96,6 +97,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
+  HAL_ADC_Start_DMA(&hadc1, ADCData, 4); //ADCData = &ADCData[0]
 
   /* USER CODE END 2 */
 
@@ -315,7 +317,15 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //interupt
+{
+//	turn off - on LED2
+	if(GPIO_Pin == GPIO_PIN_13)
+	{
+		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	}
 
+}
 /* USER CODE END 4 */
 
 /**
