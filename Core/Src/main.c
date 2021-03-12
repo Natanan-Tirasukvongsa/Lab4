@@ -113,12 +113,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  if(HAL_GetTick()-TimeStamp >= 5000)
-	  			{
-	  				on = 2;
-	  				TimeStamp = HAL_GetTick();
-	  				HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn on
-	  			}
 
   }
   /* USER CODE END 3 */
@@ -340,7 +334,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //interupt
 		{
 			on = 1;
 			TimeStamp = HAL_GetTick();
-
+			if(HAL_GetTick()-TimeStamp >= (1000+((22695477*ADCData[0])+ADCData[1])%10000))
+			{
+				on = 2;
+				TimeStamp = HAL_GetTick();
+				HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn on
+			}
 		}
 		else
 		{
