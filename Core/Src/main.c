@@ -325,7 +325,6 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupt
 {
-
 	if (GPIO_Pin == GPIO_PIN_13)
 	{
 		//HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);

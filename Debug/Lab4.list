@@ -979,7 +979,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupt
  8000860:	af00      	add	r7, sp, #0
  8000862:	4603      	mov	r3, r0
  8000864:	80fb      	strh	r3, [r7, #6]
-
 	if (GPIO_Pin == GPIO_PIN_13)
  8000866:	88fb      	ldrh	r3, [r7, #6]
  8000868:	f5b3 5f00 	cmp.w	r3, #8192	; 0x2000
