@@ -52,6 +52,7 @@ uint32_t time_pushoff = 0;
 uint32_t time_response = 0;
 uint8_t on = 0;
 
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,7 +62,6 @@ static void MX_DMA_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_ADC1_Init(void);
 /* USER CODE BEGIN PFP */
-void wait();
 
 /* USER CODE END PFP */
 
@@ -113,7 +113,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  wait();
+	  if(HAL_GetTick()-TimeStamp >= 5000)
+	  			{
+	  				on = 2;
+	  				TimeStamp = HAL_GetTick();
+	  				HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn on
+	  			}
+
   }
   /* USER CODE END 3 */
 }
@@ -334,29 +340,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //interupt
 		{
 			on = 1;
 			TimeStamp = HAL_GetTick();
+
 		}
 		else
-			{
-				on =4;
-				time_pushoff = HAL_GetTick();
-				time_response = time_pushoff - TimeStamp;
-				HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn off
-			}
-	}
-
-}
-
-void wait()
-{
-	on =2;
-	//if (HAL_GetTick()-TimeStamp >=(1000+((22695477*ADCData[0])+ADCData[1])%1000))
-	if (HAL_GetTick()-TimeStamp >= 5000)
-	{
-		on = 3;
-		TimeStamp = HAL_GetTick();
-		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn on
+		{
+			on =3;
+			time_pushoff = HAL_GetTick();
+			time_response = time_pushoff - TimeStamp;
+			HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn off
+		}
 	}
 }
+
 /* USER CODE END 4 */
 
 /**
