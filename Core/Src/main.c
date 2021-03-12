@@ -323,7 +323,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //interupt
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupt
 {
 
 	if (GPIO_Pin == GPIO_PIN_13)
@@ -334,7 +334,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //interupt
 		{
 			on = 1;
 			TimeStamp = HAL_GetTick();
-			if(HAL_GetTick()-TimeStamp >= (1000+((22695477*ADCData[0])+ADCData[1])%10000))
+			//if(time-TimeStamp >= (1000+((22695477*ADCData[0])+ADCData[1])%10000))
+			if (HAL_GetTick()-TimeStamp >= 5000)
 			{
 				on = 2;
 				TimeStamp = HAL_GetTick();
