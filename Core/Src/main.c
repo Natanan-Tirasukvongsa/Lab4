@@ -51,6 +51,7 @@ uint32_t TimeStamp = 0;
 uint32_t time_pushoff = 0;
 uint32_t time_response = 0;
 uint8_t on = 0;
+uint32_t time = 0;
 
 
 /* USER CODE END PV */
@@ -113,6 +114,20 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+//	  if (HAL_GetTick()-TimeStamp>=1000)
+//	  {
+//		  TimeStamp = HAL_GetTick();
+//		  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+//	  }
+
+	  if (HAL_GetTick()-TimeStamp >= (1000+((22695477*ADCData[0])+ADCData[1])%10000) && on==1)
+	  {
+	  	on = 2;
+	  	TimeStamp = HAL_GetTick();
+	  	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn on
+	  }
+
+	  //time = HAL_GetTick();
 
   }
   /* USER CODE END 3 */
@@ -201,7 +216,7 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_0;
   sConfig.Rank = 1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+  sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -333,13 +348,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupt
 		{
 			on = 1;
 			TimeStamp = HAL_GetTick();
-			//if(time-TimeStamp >= (1000+((22695477*ADCData[0])+ADCData[1])%10000))
-			if (HAL_GetTick()-TimeStamp >= 5000)
-			{
-				on = 2;
-				TimeStamp = HAL_GetTick();
-				HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn on
-			}
+			//if(time-TimeStamp >= (1000+((22695477*ADCData[0])+ADCData[1])%10000) && on ==1)
+//			{
+//				on = 2;
+//				TimeStamp = HAL_GetTick();
+//				HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn on
+//			}
 		}
 		else
 		{
