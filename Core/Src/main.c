@@ -130,7 +130,6 @@ int main(void)
 	  }
 
 	  //time = HAL_GetTick();
-
   }
   /* USER CODE END 3 */
 }
