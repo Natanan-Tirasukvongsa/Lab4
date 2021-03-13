@@ -1030,9 +1030,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupt
  80008d4:	f5b3 5f00 	cmp.w	r3, #8192	; 0x2000
  80008d8:	d123      	bne.n	8000922 <HAL_GPIO_EXTI_Callback+0x5a>
 	{
-		//HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-
-		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET)
+		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET) //falling
  80008da:	f44f 5100 	mov.w	r1, #8192	; 0x2000
  80008de:	4813      	ldr	r0, [pc, #76]	; (800092c <HAL_GPIO_EXTI_Callback+0x64>)
  80008e0:	f001 fbf2 	bl	80020c8 <HAL_GPIO_ReadPin>
@@ -1044,12 +1042,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupt
  80008ea:	4b11      	ldr	r3, [pc, #68]	; (8000930 <HAL_GPIO_EXTI_Callback+0x68>)
  80008ec:	2201      	movs	r2, #1
  80008ee:	701a      	strb	r2, [r3, #0]
-			TimeStamp = HAL_GetTick();
+			TimeStamp = HAL_GetTick(); //save current time stamp
  80008f0:	f000 f9f6 	bl	8000ce0 <HAL_GetTick>
  80008f4:	4602      	mov	r2, r0
  80008f6:	4b0f      	ldr	r3, [pc, #60]	; (8000934 <HAL_GPIO_EXTI_Callback+0x6c>)
  80008f8:	601a      	str	r2, [r3, #0]
-			time_pushoff = HAL_GetTick();
+			time_pushoff = HAL_GetTick(); //finger out
 			time_response = time_pushoff - TimeStamp;
 			HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); //turn off
 		}
@@ -1060,7 +1058,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupt
  80008fc:	4b0c      	ldr	r3, [pc, #48]	; (8000930 <HAL_GPIO_EXTI_Callback+0x68>)
  80008fe:	2203      	movs	r2, #3
  8000900:	701a      	strb	r2, [r3, #0]
-			time_pushoff = HAL_GetTick();
+			time_pushoff = HAL_GetTick(); //finger out
  8000902:	f000 f9ed 	bl	8000ce0 <HAL_GetTick>
  8000906:	4602      	mov	r2, r0
  8000908:	4b0b      	ldr	r3, [pc, #44]	; (8000938 <HAL_GPIO_EXTI_Callback+0x70>)
