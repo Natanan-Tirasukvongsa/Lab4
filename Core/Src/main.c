@@ -52,6 +52,8 @@ uint32_t time_pushoff = 0;
 uint32_t time_response = 0;
 uint8_t on = 0;
 uint32_t time = 0;
+uint32_t ADC_0 = 0;
+uint32_t ADC_1 = 0;
 
 
 /* USER CODE END PV */
@@ -122,7 +124,7 @@ int main(void)
 //		  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 //	  }
 
-	  if (HAL_GetTick()-TimeStamp >= (1000+((22695477*ADCData[0])+ADCData[1])%10000) && on==1)
+	  if (HAL_GetTick()-TimeStamp >= (1000+((22695477*ADC_0)+ADC_1)%10000) && on==1)
 	  {
 	  	on = 2;
 	  	TimeStamp = HAL_GetTick();
@@ -347,6 +349,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //Interrupt
 		{
 			on = 1;
 			TimeStamp = HAL_GetTick(); //save current time stamp
+			ADC_0 = ADCData[0];
+			ADC_1 = ADCData[1];
 //			if(HAL_GetTick()-TimeStamp >= (1000+((22695477*ADCData[0])+ADCData[1])%10000) && on ==1)
 //			{
 //				on = 5;
